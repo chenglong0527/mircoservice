@@ -20,4 +20,10 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user,mtimeUserT);
         userMapper.insert(mtimeUserT);
     }
+
+    @Override
+    public boolean login(String username,String password) {
+        Integer login=userMapper.selectByUsernameAndPassword(username,password);
+        return false;
+    }
 }

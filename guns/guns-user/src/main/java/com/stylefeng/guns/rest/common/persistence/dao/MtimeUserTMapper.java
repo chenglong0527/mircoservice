@@ -1,7 +1,7 @@
 package com.stylefeng.guns.rest.common.persistence.dao;
 
 import com.stylefeng.guns.rest.common.persistence.model.MtimeUserT;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.mapper.BaseMapper;import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface MtimeUserTMapper extends BaseMapper<MtimeUserT> {
 
+    Integer selectByUsernameAndPassword(@Param("username")String username, @Param("password")String password);
 }

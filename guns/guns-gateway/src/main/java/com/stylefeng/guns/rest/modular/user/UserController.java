@@ -2,6 +2,7 @@ package com.stylefeng.guns.rest.modular.user;
 import java.util.Date;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.rest.RespMessage;
 import com.stylefeng.guns.rest.film.FilmService;
 import com.stylefeng.guns.rest.user.UserService;
@@ -19,15 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 
-    @Reference(interfaceClass = UserService.class)
+    @Reference(interfaceClass = UserService.class,check = false)
     UserService userService;
     @RequestMapping("user/register")
     public RespMessage register(String username,String password,
                         String mobile,String email,
                         String address){
+        String encrypt = MD5Util.encrypt(password);
+
         UserVo userVo = new UserVo();
         userVo.setUserName(username);
-        userVo.setUserPwd(password);
+        userVo.setUserPwd(encrypt);
         userVo.setNickName("");
         userVo.setUserSex(0);
         userVo.setBirthday("");
@@ -42,5 +45,20 @@ public class UserController {
         userService.register(userVo);
 
         return RespMessage.ok();
+    }
+
+    /**
+     * 没有做
+     * @return
+     */
+    @RequestMapping("user/check")
+    public RespMessage check(){
+
+        return RespMessage.ok();
+    }
+    @RequestMapping("auth1")
+    public RespMessage login(String userName,String password){
+        boolean login = userService.login(userName, MD5Util.encrypt(password));
+        return RespMessage.ok(login);
     }
 }

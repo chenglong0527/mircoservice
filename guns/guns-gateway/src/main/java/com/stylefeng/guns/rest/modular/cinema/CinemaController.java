@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CinemaController {
-    @Reference(interfaceClass = CinemaService.class)
+    @Reference(interfaceClass = CinemaService.class,check = false)
     CinemaService cinemaService;
     @RequestMapping("aaaaa")
     public RespMessage say(){
